@@ -1,7 +1,6 @@
-# The Voidrice (Luke Smith <https://lukesmith.xyz>'s dotfiles)
+# The Voidrice (Luke Smith <https://lukesmith.xyz>'s dotfiles) Fork
 
-These are the dotfiles deployed by [LARBS](https://larbs.xyz) and as seen on
-[my YouTube channel](https://youtube.com/c/lukesmithxyz).
+These are the dotfiles deployed by [LARBS](https://larbs.xyz) and edited by fitsum and as seen on
 
 - Very useful scripts are in `~/.local/bin/`
 - Settings for:
@@ -45,5 +44,4 @@ or clone the repo files directly to your home directory and install the
 [dependencies](https://github.com/LukeSmithxyz/LARBS/blob/master/static/progs.csv).
 
 ## Default Desktop Artwork
-
 Thomas Thiemeyer's *The Road to Samarkand* ([fb](https://www.facebook.com/t.thiemeyer/), [insta](https://www.instagram.com/tthiemeyer/), [shop](https://www.redbubble.com/de/people/TThiemeyer/shop))

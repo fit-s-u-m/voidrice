@@ -1,20 +1,3 @@
-# Luke's lf settings
-
-
-# Note on Image Previews
-# For those wanting image previews, like this system, there are four steps to
-# set it up. These are done automatically for LARBS users, but I will state
-# them here for others doing it manually.
-#
-# 1. ueberzug must be installed.
-# 2. The scope file (~/.config/lf/scope for me), must have a command similar to
-#    mine to generate ueberzug images.
-# 3. A `set cleaner` line as below is a cleaner script.
-# 4. lf should be started through a wrapper script (~/.local/bin/lfub for me)
-#    that creates the environment for ueberzug. This command can be be aliased
-#    in your shellrc (`alias lf="lfub") or if set to a binding, should be
-#    called directly instead of normal lf.
-
 # Basic vars
 set shellopts '-eu'
 set ifs "\n"
@@ -22,6 +5,7 @@ set scrolloff 10
 set icons
 set period 1
 set hiddenfiles ".*:*.aux:*.log:*.bbl:*.bcf:*.blg:*.run.xml"
+set hidden true
 set cleaner '~/.config/lf/cleaner'
 set previewer '~/.config/lf/scope'
 set autoquit true
@@ -136,6 +120,19 @@ cmd bulkrename ${{
     lf -remote "send $id unselect"
 }}
 
+cmd mkdir ${{
+  printf "Directory Name: "
+  read ans
+  mkdir $ans
+}}
+
+cmd mkfile ${{
+  printf "File Name: "
+  read ans
+  $EDITOR $ans
+}}
+
+
 # Bindings
 map <c-f> $lf -remote "send $id select \"$(fzf)\""
 map J $lf -remote "send $id cd $(sed -e 's/\s*#.*//' -e '/^$/d' -e 's/^\S*\s*//' ${XDG_CONFIG_HOME:-$HOME/.config}/shell/bm-dirs | fzf)"
@@ -145,7 +142,6 @@ map D delete
 map E extract
 map C copyto
 map M moveto
-map <c-n> push :mkdir<space>""<left>
 map <c-r> reload
 map <c-s> set hidden!
 map <enter> shell
@@ -154,8 +150,9 @@ map X !$f
 map o &mimeopen "$f"
 map O $mimeopen --ask "$f"
 
+map <c-f> $lf -remote "send $id select \"$(fzf)\""
+
 map A :rename; cmd-end # at the very end
-map c push A<c-u> # new rename
 map I :rename; cmd-home # at the very beginning
 map i :rename # before extension
 map a :rename; cmd-right # after extension
@@ -166,6 +163,9 @@ map <c-e> down
 map <c-y> up
 map V push :!nvim<space>
 
+map md mkdir
+map mf mkfile
+
 map W $setsid -f $TERMINAL >/dev/null 2>&1
 
 map U $printf "%s" "$fx" | xclip -selection clipboard
@@ -174,6 +174,13 @@ map . $printf "%s" "$fx" | sed -E 's/^.+\[/https:\/\/www.youtube.com\/watch?v=/'
 map <gt> $printf "%s" "$fx" | sed -E 's/^.+\[/https:\/\/piped.video\/watch?v=/' | sed -E 's/\]\..+//' | xclip -selection clipboard
 map T $nsxiv -t "$(pwd)" # opens thumbnail mode
 map <c-l> unselect
+
+cmd quit-and-cd &{{
+    pwd > $LF_CD_FILE
+    lf -remote "send $id quit"
+}}
+
+map Q quit-and-cd
 
 
 
